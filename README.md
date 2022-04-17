@@ -1,2 +1,3 @@
-# ApiSDK
-Api sdk in Swift
+# SwiftApiSDK
+
+A description of this package.
