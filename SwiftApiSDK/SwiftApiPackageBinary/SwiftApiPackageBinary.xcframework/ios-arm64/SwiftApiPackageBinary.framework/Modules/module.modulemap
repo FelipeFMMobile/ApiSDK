@@ -1,0 +1,6 @@
+framework module SwiftApiPackageBinary {
+  umbrella header "SwiftApiPackageBinary.h"
+
+  export *
+  module * { export * }
+}
