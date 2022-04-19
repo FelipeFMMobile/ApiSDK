@@ -22,22 +22,23 @@ extension ApiRestParamProtocol {
     public func generateDefaultHeader() {
         header.addHeaderValue(value: "Content-Type", key: contentType.contentType())
         header.addHeaderValue(value: "Accept", key: contentType.contentType())
-        header.addHeaderValue(value: "x-fabricante", key: "Apple")
-        header.addHeaderValue(value: "x-modelo", key: UIDevice.current.model)
-        header.addHeaderValue(value: "x-sistema-operacional", key: UIDevice.current.systemVersion)
+        header.addHeaderValue(value: "x-manufactor", key: "Apple")
+        header.addHeaderValue(value: "x-model", key: UIDevice.current.model)
+        header.addHeaderValue(value: "x-system", key: UIDevice.current.systemVersion)
     }
 }
 
-public class ApiRestParam: ApiRestParamProtocol {
+public class ApiRestParam<T: WebDomainProtocol>: ApiRestParamProtocol {
     public var domain: WebDomainProtocol
     public var method: HttpMethod = .GET
     public var contentType: ContentType = .json
     public var endPoint: String
     public var params: ParamsProtocol
     public var header: ApiHeader = ApiHeaderSimple()
-    init(domain: WebDomainProtocol, endPoint: String, params: ParamsProtocol) {
-        self.endPoint =  domain.domainForBundle() + endPoint
+    init(endPoint: String, params: ParamsProtocol) {
         self.params = params
-        self.domain = domain
+        self.domain = T()
+        self.endPoint =  domain.domainForBundle() + endPoint
+        
     }
 }

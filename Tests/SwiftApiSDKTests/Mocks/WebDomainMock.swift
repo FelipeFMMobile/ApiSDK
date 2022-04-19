@@ -13,6 +13,8 @@ public struct WebDomainMock: WebDomainProtocol {
     case homolog = "https://homolog.themoviedb.org/3/"
     case dev = "localhost://api.themoviedb.org/3/"
     }
+    
+    public init() {}
 
     public func domainForBundle() -> String {
         if let bundleID = Bundle.main.bundleIdentifier {
@@ -24,9 +26,5 @@ public struct WebDomainMock: WebDomainProtocol {
             }
         }
         return Domain.producao.rawValue
-    }
-
-    public func config() -> ServerConfig {
-        return ServerConfig()
     }
 }

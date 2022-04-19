@@ -35,7 +35,7 @@ class SwiftApiSDKExecuteTests: XCTestCase {
         let promise = expectation(description: "Api Request")
 
         let params = GetParams(params: [:])
-        api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock(),
+        api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
                                                       endPoint: "",
                                                       params: params),
                 GenreList.self) { result, request in
@@ -61,7 +61,7 @@ class SwiftApiSDKExecuteTests: XCTestCase {
         let api: ApiRestProtocol = ApiRunner()
         let promise = expectation(description: "Api Request")
         let params = GetParams(params: [:])
-        api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock(),
+        api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
                                                       endPoint: "",
                                                       params: params), GenreList.self) { result, _ in
             switch result {
@@ -85,7 +85,7 @@ class SwiftApiSDKExecuteTests: XCTestCase {
         let api: ApiRestProtocol = ApiRunner()
         let promise = expectation(description: "Api Request")
         let params = GetParams(params: [:])
-        api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock(),
+        api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
                                                       endPoint: "",
                                                       params: params), GenreList.self) { result, _ in
             switch result {

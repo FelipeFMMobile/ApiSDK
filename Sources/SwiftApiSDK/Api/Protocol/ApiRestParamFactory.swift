@@ -7,22 +7,27 @@
 //
 
 public protocol ApiRestParamFactoryProtocol {
-    func generate(domain: WebDomainProtocol,
+    func generate<T: WebDomainProtocol>(domain: T.Type,
                   endPoint: String,
                   params: ParamsProtocol) -> ApiRestParamProtocol
-    func generate(domain: WebDomainProtocol,
+    func generate<T: WebDomainProtocol>(domain: T.Type,
                   method: HttpMethod,
                   endPoint: String,
                   params: ParamsProtocol) -> ApiRestParamProtocol
 }
 
 extension ApiRestParamFactoryProtocol {
-    public func generate(domain: WebDomainProtocol, endPoint: String, params: ParamsProtocol) -> ApiRestParamProtocol {
-        ApiRestParam(domain: domain, endPoint: endPoint, params: params)
+    public func generate<T: WebDomainProtocol>(domain: T.Type,
+                                               endPoint: String,
+                                               params: ParamsProtocol) -> ApiRestParamProtocol {
+        ApiRestParam<T>(endPoint: endPoint, params: params)
     }
 
-    public func generate(domain: WebDomainProtocol, method: HttpMethod, endPoint: String, params: ParamsProtocol) -> ApiRestParamProtocol {
-        let param = ApiRestParam(domain: domain, endPoint: endPoint, params: params)
+    public func generate<T: WebDomainProtocol>(domain: T.Type,
+                                               method: HttpMethod,
+                                               endPoint: String,
+                                               params: ParamsProtocol) -> ApiRestParamProtocol {
+        let param = ApiRestParam<T>(endPoint: endPoint, params: params)
         param.method = method
         return param
     }
