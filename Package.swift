@@ -27,7 +27,7 @@ let package = Package(
             path: "Sources/SwiftApiSDK"),
         .binaryTarget(
                     name: "SwiftApiSDKBinary",
-                    path: "SwiftApiPackageBinary/SwiftApiPackageBinary.xcframework"
+                    path: "SwiftApiSDKBinary/SwiftApiSDKBinary.xcframework"
                 ),
         .testTarget(
             name: "SwiftApiSDKTests",
