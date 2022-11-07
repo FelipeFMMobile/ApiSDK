@@ -9,15 +9,16 @@
 import Foundation
 
 open class ApiRunner: NSObject, ApiRestProtocol {
-
+    private var session: URLSession?
     let configuration = URLSessionConfiguration.default
-
+    
     public func run<T>(param: ApiRestParamProtocol, _ resultModel: T.Type,
                        completion: @escaping ApiCompletionRequest<T>) where T: Decodable {
-
-        let session = URLSession(configuration: configuration,
+        configuration.timeoutIntervalForRequest = 10
+        configuration.timeoutIntervalForResource = 3 * 60
+        session = URLSession(configuration: configuration,
                                  delegate: self,
-                                 delegateQueue: nil)
+                             delegateQueue: nil)
         let urlString = param.endPoint
         guard let url = URL(string: urlString) else {
             completion(.failure(ApiError.domainFail), nil)
@@ -33,7 +34,7 @@ open class ApiRunner: NSObject, ApiRestProtocol {
         }
         request = param.params.buildParams(request: request)
         // Request
-        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task = session?.dataTask(with: request, completionHandler: { data, response, error in
             guard error == nil else {
                 completion(.failure(ApiError.networkingError(NSError(domain: error?.localizedDescription ?? "",
                                                                      code: 0, userInfo: nil))), nil)
@@ -61,7 +62,7 @@ open class ApiRunner: NSObject, ApiRestProtocol {
             }
             completion(.failure(errorCode), request)
         })
-        task.resume()
+        task?.resume()
     }
 
     private func defaultError(errorType: ApiErrorCodes, _ errorCode: Int = 0) -> NSError {
