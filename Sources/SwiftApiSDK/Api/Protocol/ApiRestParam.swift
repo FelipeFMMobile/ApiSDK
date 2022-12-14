@@ -20,12 +20,12 @@ public protocol ApiRestParamProtocol: AnyObject {
 
 extension ApiRestParamProtocol {
     public func generateDefaultHeader() {
-        header.addHeaderValue(value: "User-Agent", key: "UpcomingMovies/1.0")
-        header.addHeaderValue(value: "Content-Type", key: contentType.contentType())
-        header.addHeaderValue(value: "Accept-Encoding", key: contentType.contentType())
-        header.addHeaderValue(value: "x-manufactor", key: "Apple")
-        header.addHeaderValue(value: "x-model", key: UIDevice.current.model)
-        header.addHeaderValue(value: "x-system", key: UIDevice.current.systemVersion)
+        header.addHeaderValue(key: "User-Agent", value: "UpcomingMovies/1.0")
+        header.addHeaderValue(key: "Content-Type", value: contentType.contentType())
+        header.addHeaderValue(key: "Accept-Encoding", value: contentType.contentType())
+        header.addHeaderValue(key: "x-manufactor", value: "Apple")
+        header.addHeaderValue(key: "x-model", value: UIDevice.current.model)
+        header.addHeaderValue(key: "x-system", value: UIDevice.current.systemVersion)
     }
 }
 
