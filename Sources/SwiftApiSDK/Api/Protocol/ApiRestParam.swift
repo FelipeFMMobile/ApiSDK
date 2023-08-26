@@ -10,36 +10,48 @@ import UIKit
 
 public protocol ApiRestParamProtocol: AnyObject {
     var domain: WebDomainProtocol { get }
-    var method: HttpMethod { get }
-    var contentType: ContentType { get }
-    var endPoint: String { get }
+    var endPoint: EndPoint { get }
     var params: ParamsProtocol { get }
     var header: ApiHeader { get }
     func generateDefaultHeader()
+    func debugLog()
 }
 
 extension ApiRestParamProtocol {
     public func generateDefaultHeader() {
         header.addHeaderValue(key: "User-Agent", value: "UpcomingMovies/1.0")
-        header.addHeaderValue(key: "Content-Type", value: contentType.contentType())
-        header.addHeaderValue(key: "Accept-Encoding", value: contentType.contentType())
+        header.addHeaderValue(key: "Content-Type", value: endPoint.contentType().contentType())
+        header.addHeaderValue(key: "Accept-Encoding", value: endPoint.contentType().contentType())
         header.addHeaderValue(key: "x-manufactor", value: "Apple")
         header.addHeaderValue(key: "x-model", value: UIDevice.current.model)
         header.addHeaderValue(key: "x-system", value: UIDevice.current.systemVersion)
+        endPoint.header().forEach { header.addHeaderValue(key: $0.key, value: $0.value )}
+    }
+
+    public func debugLog() {
+        debugPrint("📡")
+        debugPrint("# REQUEST --------------------- ")
+        debugPrint("## DOMAIN: \(domain.domainForBundle() + endPoint.path()) ")
+        header.header.forEach {
+            debugPrint("## HEADER [ \($0.key) : \($0.value) ]")
+        }
+        debugPrint("## ENDPOINT: \(endPoint.method().verb()) ")
+        debugPrint("## ENDPOINT: \(endPoint.contentType().contentType().lowercased()) ")
+        params.params.forEach {
+            debugPrint("## PARAMS [ \($0.key) : \($0.value) ]")
+        }
+        
     }
 }
 
 public class ApiRestParam<T: WebDomainProtocol>: ApiRestParamProtocol {
     public var domain: WebDomainProtocol
-    public var method: HttpMethod = .GET
-    public var contentType: ContentType = .json
-    public var endPoint: String
+    public var endPoint: EndPoint
     public var params: ParamsProtocol
     public var header: ApiHeader = ApiHeaderSimple()
-    init(endPoint: String, params: ParamsProtocol) {
+    init(endPoint: EndPoint, params: ParamsProtocol) {
         self.params = params
         self.domain = T()
-        self.endPoint =  domain.domainForBundle() + endPoint
-        
+        self.endPoint =  endPoint
     }
 }

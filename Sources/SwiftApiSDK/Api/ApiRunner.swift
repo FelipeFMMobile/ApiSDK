@@ -19,13 +19,13 @@ open class ApiRunner: NSObject, ApiRestProtocol {
         session = URLSession(configuration: configuration,
                                  delegate: self,
                              delegateQueue: nil)
-        let urlString = param.endPoint
+        let urlString = param.domain.domainForBundle() + param.endPoint.path()
         guard let url = URL(string: urlString) else {
             completion(.failure(ApiError.domainFail), nil)
             return
         }
         var request = URLRequest(url: url)
-        request.httpMethod = param.method.verb() // set http method as POST
+        request.httpMethod = param.endPoint.method().verb()
         // HTTP Headers
         param.generateDefaultHeader()
         // headers
@@ -33,6 +33,9 @@ open class ApiRunner: NSObject, ApiRestProtocol {
             request.setValue(value.value, forHTTPHeaderField: value.key)
         }
         request = param.params.buildParams(request: request)
+
+        param.debugLog()
+
         // Request
         let task = session?.dataTask(with: request, completionHandler: { data, response, error in
             guard error == nil else {

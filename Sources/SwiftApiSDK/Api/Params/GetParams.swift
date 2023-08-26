@@ -28,7 +28,7 @@ public class QueryItensConvert {
 
 /// GetParams Parse Build
 public class GetParams: QueryItensConvert, ParamsProtocol {
-    let params: [String: Any]
+    public var params: [String: Any]
 
     public required init(params: [String: Any]) {
         self.params = params

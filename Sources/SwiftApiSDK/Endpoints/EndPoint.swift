@@ -13,4 +13,5 @@ public protocol EndPoint {
     func path() -> Path
     func header() -> Header
     func contentType() -> ContentType
+    func method() -> HttpMethod
 }

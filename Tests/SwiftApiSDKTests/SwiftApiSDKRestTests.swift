@@ -74,7 +74,7 @@ class SwiftApiSDKRestTests: XCTestCase {
         let checkUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=1f54bd990f1cdfb230adb312546d765d"
         let params = GetParams(params: ["api_key": "1f54bd990f1cdfb230adb312546d765d"])
         api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
-                                                      endPoint: UpcomingEndpoints.genres.path(),
+                                                      endPoint: UpcomingEndpoints.genres,
                                                       params: params), GenreList.self) { result, request in
             switch result {
             case .success(let result):
