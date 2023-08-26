@@ -10,7 +10,7 @@ import Foundation
 
 /// FormEncodedParams Parse Build
 public class FormEncodedParams: QueryItensConvert, ParamsProtocol {
-    let params: [String: Any]
+    public var params: [String: Any]
 
     public required init(params: [String: Any]) {
         self.params = params

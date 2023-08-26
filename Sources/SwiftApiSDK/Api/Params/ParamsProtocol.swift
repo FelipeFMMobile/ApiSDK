@@ -9,6 +9,7 @@
 import Foundation
 
 public protocol ParamsProtocol {
+    var params: [String: Any] { get set }
     init(params: [String: Any])
     func buildParams(request: URLRequest) -> URLRequest
 }

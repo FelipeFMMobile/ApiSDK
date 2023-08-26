@@ -12,6 +12,25 @@ import OHHTTPStubs
 import OHHTTPStubsSwift
 
 class SwiftApiSDKExecuteTests: XCTestCase {
+    private enum StubEndPoint: EndPoint {
+        case basic
+        func path() -> SwiftApiSDK.Path {
+            ""
+        }
+        
+        func header() -> SwiftApiSDK.Header {
+            [:]
+        }
+        
+        func contentType() -> SwiftApiSDK.ContentType {
+            .json
+        }
+        
+        func method() -> SwiftApiSDK.HttpMethod {
+            .GET
+        }
+    }
+
     override func setUp() {
         HTTPStubs.setEnabled(true)
         HTTPStubs.onStubActivation { (request: URLRequest, stub: HTTPStubsDescriptor, _: HTTPStubsResponse) in
@@ -36,7 +55,7 @@ class SwiftApiSDKExecuteTests: XCTestCase {
 
         let params = GetParams(params: [:])
         api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
-                                                      endPoint: "",
+                                                      endPoint: StubEndPoint.basic,
                                                       params: params),
                 GenreList.self) { result, request in
             switch result {
@@ -62,7 +81,7 @@ class SwiftApiSDKExecuteTests: XCTestCase {
         let promise = expectation(description: "Api Request")
         let params = GetParams(params: [:])
         api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
-                                                      endPoint: "",
+                                                      endPoint: StubEndPoint.basic,
                                                       params: params), GenreList.self) { result, _ in
             switch result {
             case .success:
@@ -86,7 +105,7 @@ class SwiftApiSDKExecuteTests: XCTestCase {
         let promise = expectation(description: "Api Request")
         let params = GetParams(params: [:])
         api.run(param: ApiParamFactory.basic.generate(domain: WebDomainMock.self,
-                                                      endPoint: "",
+                                                      endPoint: StubEndPoint.basic,
                                                       params: params), GenreList.self) { result, _ in
             switch result {
             case .success:
