@@ -118,4 +118,20 @@ class SwiftApiSDKExecuteTests: XCTestCase {
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
+
+    @available(iOS 15.0, *)
+    func testNovaApiRequestAsync_MockGenreList_True() async throws {
+        stub(condition: isHost("api.themoviedb.org")) { _ in
+            let stubPath = Bundle.module.url(forResource: "Genre", withExtension: "json")!.path
+            return fixture(filePath: stubPath, status: 200, headers: ["Content-Type": "application/json"])
+        }
+
+        let api: ApiRestAsyncProtocol = ApiRunner()
+        let params = ApiParamFactory.basic.generate(domain: WebDomainMock.self,
+                                                    endPoint: StubEndPoint.basic,
+                                                    params: GetParams(params: [:]))
+        let (model, request) = try await api.run(param: params,  GenreList.self)
+        XCTAssertTrue(!model.genres.isEmpty)
+        XCTAssert(request != nil)
+    }
 }
