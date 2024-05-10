@@ -36,6 +36,7 @@ protocol ApiRestProtocol {
     )
 }
 
+@available(iOS 15.0, *)
 protocol ApiRestAsyncProtocol {
     func run<T: Decodable>(param: ApiRestParamProtocol,
                            _ resultModel: T.Type) async throws -> (T,  URLRequest?)
