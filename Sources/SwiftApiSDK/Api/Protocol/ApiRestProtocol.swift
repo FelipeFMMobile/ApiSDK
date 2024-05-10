@@ -36,6 +36,11 @@ protocol ApiRestProtocol {
     )
 }
 
+protocol ApiRestAsyncProtocol {
+    func run<T: Decodable>(param: ApiRestParamProtocol,
+                           _ resultModel: T.Type) async throws -> (T,  URLRequest?)
+}
+
 protocol ApiRestCacheProtocol {
     func setCachePolicy()
 }
